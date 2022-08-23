@@ -28,9 +28,9 @@ int main()
     while (temp1->link != NULL)
     {
         temp1 = temp1->link;
-        //printf("" + temp->data); //to print each node
+        printf("" + temp1->data); //to print each node
     }
 
-    temp1->link = temp;
+    //temp1->link = temp;
 }
 
