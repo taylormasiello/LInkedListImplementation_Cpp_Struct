@@ -1,36 +1,106 @@
 #include <iostream>
+using namespace std;
 
 struct Node
 {
     int data;
-    Node* link;
+    struct Node* next;
 };
 
+//insert at beginning
+void push(struct Node** head, int node_data)
+{
+    //create and allocate node
+    struct Node* newNode = new Node;
 
+    newNode->data = node_data;
+    newNode->next = (*head); //set next of new node as head
+
+    (*head) = newNode; // move head to point to the newNode
+}
+
+//insert new node after a given node
+void insertAfter(struct Node* prev_node, int node_data)
+{
+    //check if given prev_node NULL
+    if (prev_node == NULL)
+    {
+        cout << "given previous node cannot be NULL"; 
+        return;
+    }
+
+    //create, allocate new node
+    struct Node* newNode = new Node;
+
+    newNode->data = node_data;
+    newNode->next = prev_node->next; //make next of newNode as next of prev_node
+
+    prev_node->next = newNode; //move next of prev_node as new_node
+}
+
+//insert at end
+void append(struct Node** head, int node_data)
+{
+
+    struct Node* newNode = new Node;
+
+    struct Node* last = *head; /* used in step 5*/
+
+    newNode->data = node_data;
+    newNode->next = NULL; //set next pointer of newNode to null as is last node
+
+    //if list empty, newNode becomes head
+    if (*head == NULL)
+    {
+        *head = newNode;
+        return;
+    }
+
+    //traverse till the last node
+    while (last->next != NULL)
+        last = last->next;
+
+    //change next of last node
+    last->next = newNode;
+    return;
+}
+
+// display linkedList
+void displayList(struct Node* node)
+{
+    //traverse list, display each node
+    while (node != NULL)
+    {
+        cout << node->data << "-->";
+        node = node->next;
+    }
+
+    if (node == NULL)
+        cout << "null";
+}
 
 int main()
 {
-    Node* A; //pointer to Node A
-    A = NULL; //A points no where, list is empty
+    //empty list
+    struct Node* head = NULL;
 
-    Node* temp = new Node(); //new syntax of C++ preferred to grab mem blocks
-    temp->data = 2;
-    temp->link = NULL;
+    //insert 10
+    append(&head, 10);
 
-    A = temp;
+    //insert 20 at beginning
+    push(&head, 20);
 
-    temp = new Node();
-    temp->data = 4;
-    temp->link = NULL;
+    //insert 30 at beginning
+    push(&head, 30);
 
-    //traversal of list
-    Node* temp1 = A;
-    while (temp1->link != NULL)
-    {
-        temp1 = temp1->link;
-        printf("" + temp1->data); //to print each node
-    }
+    //insert 40 at end
+    append(&head, 40); // 
 
-    //temp1->link = temp;
+    //insert 50, after 20
+    insertAfter(head->next, 50);
+
+    cout << "Final linked list: " << endl;
+    displayList(head);
+
+    return 0;
 }
-
