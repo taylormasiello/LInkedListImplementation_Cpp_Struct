@@ -18,5 +18,19 @@ int main()
     temp->link = NULL;
 
     A = temp;
+
+    temp = new Node();
+    temp->data = 4;
+    temp->link = NULL;
+
+    //traversal of list
+    Node* temp1 = A;
+    while (temp1->link != NULL)
+    {
+        temp1 = temp1->link;
+        //printf("" + temp->data); //to print each node
+    }
+
+    temp1->link = temp;
 }
 
