@@ -7,7 +7,7 @@ struct Node
     struct Node* next;
 };
 
-//insert at beginning
+//create list by adding nodes at head; insert at  beginning
 void push(struct Node** head, int node_data)
 {
     //create and allocate node
@@ -65,6 +65,45 @@ void append(struct Node** head, int node_data)
     return;
 }
 
+//delete first node
+Node* deleteFirstNode(struct Node* head)
+{
+    if (head == NULL)
+        return NULL;
+
+    //move head pointer to next node
+    Node* tempNode = head;
+    head = head->next;
+    delete tempNode;
+
+    return head;
+}
+
+//delete last node
+Node* removeLastNode(struct Node* head)
+{
+    if (head == NULL)
+        return NULL;
+
+    if (head->next == NULL) {
+        delete head;
+        return NULL;
+    }
+
+    //find second last node
+    Node* second_last = head;
+    while (second_last->next->next != NULL)
+        second_last = second_last->next;
+
+    //delete last node
+    delete (second_last->next);
+
+    //set next of second_last to null
+    second_last->next = NULL;
+
+    return head;
+}
+
 // display linkedList
 void displayList(struct Node* node)
 {
@@ -81,9 +120,38 @@ void displayList(struct Node* node)
 
 int main()
 {
-    //empty list
-    struct Node* head = NULL;
+    //create empty list
+    Node* head = NULL;
 
+    // create linked list
+    push(&head, 2);
+    push(&head, 4);
+    push(&head, 6);
+    push(&head, 8);
+    push(&head, 10);
+
+    Node* temp;
+
+    cout << "Linked list created " << endl; for (temp = head; temp != NULL; temp = temp->next)
+        cout << temp->data << "-->";
+    if (temp == NULL)
+        cout << "NULL" << endl;
+
+    //delete first node
+    head = deleteFirstNode(head);
+    cout << "Linked list after deleting head node" << endl; for (temp = head; temp != NULL; temp = temp->next)
+        cout << temp->data << "-->";
+    if (temp == NULL)
+        cout << "NULL" << endl;
+
+    //delete last node
+    head = removeLastNode(head);
+    cout << "Linked list after deleting last node" << endl; for (temp = head; temp != NULL; temp = temp->next)
+        cout << temp->data << "-->";
+    if (temp == NULL)
+        cout << "NULL";
+
+    /*
     //insert 10
     append(&head, 10);
 
@@ -101,6 +169,7 @@ int main()
 
     cout << "Final linked list: " << endl;
     displayList(head);
+    */
 
     return 0;
 }
